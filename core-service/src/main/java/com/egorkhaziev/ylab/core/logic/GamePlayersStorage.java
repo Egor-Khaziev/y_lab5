@@ -28,7 +28,7 @@ public class GamePlayersStorage {
     private Map<String, Player> playerList = new HashMap<>();
 
     public Map<String, Player> getPlayerList(){
-        return Collections.unmodifiableMap(playerList);
+        return playerList;
     }
 
     //загрузка пользователей из файла

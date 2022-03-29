@@ -29,7 +29,7 @@ angular.module('game-front').controller('indexController', function ($rootScope,
 
     $scope.tryToAuth = function () {
         $http({
-            url: 'http://localhost:8080/gameplay?player1='+$scope.user+'&player2='+$scope.user,
+            url: 'http://localhost:8080/gameplay/new?player1='+$scope.user+'&player2='+$scope.user,
             method: 'GET',
         }).then(function (response) {
             $scope.auth = true;

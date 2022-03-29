@@ -15,7 +15,7 @@ angular.module('game-front').controller('welcomeController', function ($scope, $
         // };
 
     $scope.checkOut = function () {
-        $http.get(contextPath + '?player1=Maxxx&player2=tset')
+        $http.get(contextPath + '/new?player1=Maxxx&player2=tset')
             .then(function (response) {
                 $scope.XOResponse = response.data;
             });

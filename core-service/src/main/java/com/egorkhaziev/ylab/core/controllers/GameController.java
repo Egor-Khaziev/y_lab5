@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/gameplay")
+//@RequestMapping("/gameplay")
 @Slf4j
 public class GameController {
 
     private final GameService gameService;
 
-    @GetMapping
+    @GetMapping("/new")
     public XOResponse startNewGame(@RequestParam String player1, @RequestParam String player2) {
         log.warn("new game");
         return gameService.startNewGame(player1, player2);

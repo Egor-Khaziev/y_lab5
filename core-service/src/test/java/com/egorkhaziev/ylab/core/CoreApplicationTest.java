@@ -56,17 +56,17 @@ public class CoreApplicationTest {
         XOResponse response = null;
 
         try {
-            response = restTemplate.getForObject("/gameplay?player1=Maxxx&player2=тест", XOResponse.class);
+            response = restTemplate.getForObject("/new?player1=Maxxx&player2=тест", XOResponse.class);
             Thread.sleep(500);
-            restTemplate.postForObject("/gameplay/step", request1, XOResponse.class);
+            restTemplate.postForObject("/step", request1, XOResponse.class);
             Thread.sleep(500);
-            restTemplate.postForObject("/gameplay/step", request2, XOResponse.class);
+            restTemplate.postForObject("/step", request2, XOResponse.class);
             Thread.sleep(500);
-            restTemplate.postForObject("/gameplay/step", request3, XOResponse.class);
+            restTemplate.postForObject("/step", request3, XOResponse.class);
             Thread.sleep(500);
-            restTemplate.postForObject("/gameplay/step", request4, XOResponse.class);
+            restTemplate.postForObject("/step", request4, XOResponse.class);
             Thread.sleep(500);
-            restTemplate.postForObject("/gameplay/step", request5, XOResponse.class);
+            restTemplate.postForObject("/step", request5, XOResponse.class);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
