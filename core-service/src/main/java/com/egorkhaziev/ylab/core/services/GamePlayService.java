@@ -4,15 +4,13 @@ import com.egorkhaziev.ylab.core.api.XORequest;
 import com.egorkhaziev.ylab.core.api.XOResponse;
 import com.egorkhaziev.ylab.core.converters.ConverterPlayer;
 import com.egorkhaziev.ylab.core.exceptions.NoCreateGameException;
-import com.egorkhaziev.ylab.core.logic.GamePlayersStorage;
-import com.egorkhaziev.ylab.core.logic.GameSave;
 import com.egorkhaziev.ylab.core.logic.Save.JSON.JSONout;
 import com.egorkhaziev.ylab.core.logic.Save.XML.XMLout;
 import com.egorkhaziev.ylab.core.logic.model.GamePlay;
 import com.egorkhaziev.ylab.core.logic.model.Player;
 import com.egorkhaziev.ylab.core.logic.model.Step;
 import com.egorkhaziev.ylab.core.exceptions.WrongInputException;
-import com.egorkhaziev.ylab.core.services.MapService;
+import com.egorkhaziev.ylab.core.utils.Dot;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,13 +20,13 @@ import javax.annotation.PostConstruct;
 @Service
 @Slf4j
 @Data
-public class GamePlayService {
+public class GamePlayService implements GamePlayRestResponseInterface, GamePlayLogicInterface {
 
     private GamePlay gamePlay;
-    private final MapService mapService;
-    private final GamePlayersStorage players;
-    private final GameSave gameSave;
+    private final MapJobInterface mapService;
+    private final PlayerService playerService;
     private final ConverterPlayer converterPlayer;
+    private final Dot dot;
 
     private int x = 0;
     private int y = 0;
@@ -46,8 +44,8 @@ public class GamePlayService {
     public XOResponse responseNewGame(String player1, String player2) {
         startNewGame(player1, player2);
         XOResponse xoResponse = new XOResponse();
-        xoResponse.setPlayer1(converterPlayer.playerToDTO(players.getPlayer1()));
-        xoResponse.setPlayer2(converterPlayer.playerToDTO(players.getPlayer2()));
+        xoResponse.setPlayer1(converterPlayer.playerToDTO(playerService.getPlayer1()));
+        xoResponse.setPlayer2(converterPlayer.playerToDTO(playerService.getPlayer2()));
         xoResponse.setGameMap(mapService.getMap());
         log.warn("собран ответ XOResponse на создание новой игры");
         return xoResponse;
@@ -56,8 +54,8 @@ public class GamePlayService {
     public XOResponse responseStep(XORequest request) {
         XOResponse xoResponse = new XOResponse();
         xoResponse.setGameMap(step(request.getX(), request.getY(), converterPlayer.dtoToPlayer(request.getPlayerDTO())));
-        xoResponse.setPlayer1(converterPlayer.playerToDTO(players.getPlayer1()));
-        xoResponse.setPlayer2(converterPlayer.playerToDTO(players.getPlayer2()));
+        xoResponse.setPlayer1(converterPlayer.playerToDTO(playerService.getPlayer1()));
+        xoResponse.setPlayer2(converterPlayer.playerToDTO(playerService.getPlayer2()));
         if(gameFinished) {
             xoResponse.setWinner(converterPlayer.playerToDTO(gamePlay.getGameResult().getPlayer()));
         }
@@ -71,12 +69,12 @@ public class GamePlayService {
         gamePlay = new GamePlay();
         gameFinished = false;
 
-        players.loadPlayers();
-        players.authorization(player1Name, player2Name);
-        players.getPlayer1().setSimbol((mapService.getX_DOT()));
-        players.getPlayer2().setSimbol((mapService.getO_DOT()));
-        gamePlay.getPlayer().add(players.getPlayer1());
-        gamePlay.getPlayer().add(players.getPlayer2());
+        playerService.loadPlayers();
+        playerService.authorization(player1Name, player2Name);
+        playerService.getPlayer1().setSimbol((dot.getX_DOT()));
+        playerService.getPlayer2().setSimbol((dot.getO_DOT()));
+        gamePlay.getPlayer().add(playerService.getPlayer1());
+        gamePlay.getPlayer().add(playerService.getPlayer2());
         mapService.paintMap();
     }
 
@@ -95,7 +93,7 @@ public class GamePlayService {
                 && mapService.getMap()[0].length >= y
                 && (mapService.getMap()[x - 1][y - 1] != 'X' && mapService.getMap()[x - 1][y - 1] != 'O')) {
             mapService.getMap()[x - 1][y - 1] = player.getSimbol();
-            mapService.gameCountDownMinus();
+            mapService.mapCountDownMinus();
 
             Step step = new Step();
             step.setPlayerId(player.getId());
@@ -121,7 +119,7 @@ public class GamePlayService {
     }
 
     private boolean friendlyWinCheck() {
-        if (mapService.getGameCountDown() == 0) {
+        if (mapService.getMapCountDown() == 0) {
             System.out.println("GAME IS OVER\nFRIENDLY WIN");
             log.debug("registered friendly win");
             saveProcedure();
@@ -139,8 +137,8 @@ public class GamePlayService {
 
             gameFinished =true;
             //сохранение отчета в файл
-            Player enemy = player.getId()==players.getPlayer1().getId()?players.getPlayer2():players.getPlayer1();
-            gameSave.saveToFile(player, enemy);
+            Player enemy = player.getId()== playerService.getPlayer1().getId()? playerService.getPlayer2(): playerService.getPlayer1();
+            playerService.saveLogToFile(player, enemy);
 
             player.setSeriesWin(player.getSeriesWin() + 1);
             player.setWin(player.getWin() + 1);
@@ -188,8 +186,9 @@ public class GamePlayService {
     }
 
     private void saveProcedure(){
-        gameSave.savePlayers();
-        players.baseRefresh();
+        playerService.savePlayersToFile();
+        playerService.baseRefresh();
+        playerService.savePlayersToBD();
         new XMLout(gamePlay,gameNumber);
         new JSONout(gamePlay,gameNumber);
     }

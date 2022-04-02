@@ -1,7 +1,7 @@
 package com.egorkhaziev.ylab.core.converters;
 
 import com.egorkhaziev.ylab.core.DTO.PlayerDTO;
-import com.egorkhaziev.ylab.core.logic.GamePlayersStorage;
+import com.egorkhaziev.ylab.core.services.PlayerService;
 import com.egorkhaziev.ylab.core.logic.model.Player;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public final class ConverterPlayer {
 
-    private final GamePlayersStorage players;
+    private final PlayerService players;
 
     public PlayerDTO playerToDTO(Player player){
         PlayerDTO dto = new PlayerDTO();

@@ -14,12 +14,12 @@
         "num" : 0,
         "playerId" : 1,
         "x" : 2,
-        "y" : 1
+        "y" : 3
       }, {
         "num" : 1,
         "playerId" : 2,
         "x" : 1,
-        "y" : 2
+        "y" : 1
       }, {
         "num" : 2,
         "playerId" : 1,
@@ -29,12 +29,12 @@
         "num" : 3,
         "playerId" : 2,
         "x" : 1,
-        "y" : 1
+        "y" : 2
       }, {
         "num" : 4,
         "playerId" : 1,
         "x" : 2,
-        "y" : 3
+        "y" : 1
       } ]
     },
     "gameResult" : {

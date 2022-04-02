@@ -12,7 +12,5 @@ public class GameMap {
 
     private int gameCountDown;
 
-    private final char EMPTY_DOT = '*';
-    private final char X_DOT = 'X';
-    private final char O_DOT = 'O';
+
 }

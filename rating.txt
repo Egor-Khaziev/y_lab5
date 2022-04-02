@@ -4,3 +4,6 @@ Maxxx - Winner
 Sun Apr 03 01:56:21 GMT+06:00 2022 - Game finished 
 Maxxx - Winner
 тест - Loss
+Sun Apr 03 03:28:44 GMT+06:00 2022 - Game finished 
+Maxxx - Winner
+тест - Loss

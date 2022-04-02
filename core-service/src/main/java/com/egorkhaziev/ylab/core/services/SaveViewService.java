@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class SaveService {
+public class SaveViewService implements SaveViewInterface {
 
     private final ViewGameSave viewGameSave;
 

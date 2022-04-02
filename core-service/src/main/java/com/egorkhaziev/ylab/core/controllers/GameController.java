@@ -2,7 +2,7 @@ package com.egorkhaziev.ylab.core.controllers;
 
 import com.egorkhaziev.ylab.core.api.XORequest;
 import com.egorkhaziev.ylab.core.api.XOResponse;
-import com.egorkhaziev.ylab.core.services.GamePlayService;
+import com.egorkhaziev.ylab.core.services.GamePlayRestResponseInterface;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class GameController {
 
-    private final GamePlayService gamePlayService;
+    private final GamePlayRestResponseInterface gamePlayService;
 
     @GetMapping("/new")
     public XOResponse startNewGame(@RequestParam String player1, @RequestParam String player2) {

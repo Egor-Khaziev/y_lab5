@@ -1,23 +1,22 @@
-package com.egorkhaziev.ylab.core.logic;
+package com.egorkhaziev.ylab.core.services;
 
 import com.egorkhaziev.ylab.core.logic.model.Player;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
+@Service
 @Data
 @Slf4j
 @RequiredArgsConstructor
-public class GamePlayersStorage {
+public class PlayerService implements PlayersStorageInterface{
 
     private Player player1;
     private Player player2;
@@ -31,16 +30,19 @@ public class GamePlayersStorage {
     //загрузка пользователей из файла
     public void loadPlayers() {
         playerList = new HashMap<>();
-        //Проверка на наличие файла
-        if(new File("players.txt").exists()) {
-            try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("players.txt"))) {
-                playerList = (HashMap) objectInputStream.readObject();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        //Проверка на наличие файла
+//        if(new File("players.txt").exists()) {
+//            try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("players.txt"))) {
+//                playerList = (HashMap) objectInputStream.readObject();
+//            } catch (ClassNotFoundException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+
+
         log.debug("load player list +");
     }
 
@@ -74,4 +76,29 @@ public class GamePlayersStorage {
         playerList.put(player2.getName(), player2);
     }
 
+
+    public void savePlayersToFile() {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("players.txt"))) {
+            for (Map.Entry<String, Player> entry: getPlayerList().entrySet()) {
+                objectOutputStream.writeObject(getPlayerList());
+            }
+        } catch (IOException ioEx){
+            ioEx.getMessage();
+        }
+    }
+
+    //new сохранение рейтинга
+    public void saveLogToFile(Player winPlayer, Player lossPlayer) {
+        try (BufferedWriter writter = new BufferedWriter(new FileWriter("rating.txt",true))) {
+            writter.write(new Date() + " - Game finished \n");
+            writter.write(winPlayer.getName() + " - Winner\n");
+            writter.write(lossPlayer.getName() + " - Loss\n");
+        }
+        catch (IOException ioEx){
+            ioEx.getMessage();
+        }
+    }
+
+    public void savePlayersToBD() {
+    }
 }
