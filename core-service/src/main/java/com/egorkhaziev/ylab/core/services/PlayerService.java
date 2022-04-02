@@ -1,16 +1,16 @@
 package com.egorkhaziev.ylab.core.services;
 
+import com.egorkhaziev.ylab.core.exceptions.UserNotFoundException;
 import com.egorkhaziev.ylab.core.logic.model.Player;
+import com.egorkhaziev.ylab.core.repositories.PlayerRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.io.*;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Data
@@ -20,6 +20,8 @@ public class PlayerService implements PlayersStorageInterface{
 
     private Player player1;
     private Player player2;
+
+    private final PlayerRepository playerRepository;
 
     private Map<String, Player> playerList = new HashMap<>();
 
@@ -40,7 +42,10 @@ public class PlayerService implements PlayersStorageInterface{
 //                e.printStackTrace();
 //            }
 //        }
-
+        List<Player> list =  playerRepository.findAll();
+        for (Player p:list){
+            playerList.put(p.getName(),p);
+        }
 
 
         log.debug("load player list +");
@@ -71,9 +76,12 @@ public class PlayerService implements PlayersStorageInterface{
         return newPlayer;
     }
 
+    @Transactional
     public void baseRefresh() {
-        playerList.put(player1.getName(), player1);
-        playerList.put(player2.getName(), player2);
+        List<Player> activPlayers = new ArrayList<Player>();
+        activPlayers.add(player1);
+        activPlayers.add(player2);
+        playerRepository.saveAll(activPlayers);
     }
 
 

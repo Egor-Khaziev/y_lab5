@@ -20,7 +20,8 @@ import java.time.LocalDateTime;
 @Table(name = "players")
 public class Player implements Serializable {
 
-    private int id;
+    @Column(name = "id")
+    private Integer id;
 
     @Id
     @Column(name = "name")
@@ -28,17 +29,18 @@ public class Player implements Serializable {
 
     @Column(name = "win")
     @JsonIgnore
-    private int win;
+    private Integer win;
 
     @Column(name = "loss")
     @JsonIgnore
-    private int loss;
+    private Integer loss;
 
-    @Column(name = "seriesWin")
+    @Column(name = "series")
     @JsonIgnore
-    private int seriesWin;
+    private Integer seriesWin;
 
-    private char simbol;
+    @Column(name = "simbol")
+    private Character simbol;
 
     @JsonIgnore
     @CreationTimestamp
@@ -52,7 +54,9 @@ public class Player implements Serializable {
 
     public Player(String name) {
         this.name = name;
-
+        this.loss = 0;
+        this.win = 0;
+        this.seriesWin = 0;
     }
 
     @Override

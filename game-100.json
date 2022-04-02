@@ -2,11 +2,11 @@
   "gamePlay" : {
     "player" : [ {
       "id" : 1,
-      "name" : "Maxxx",
+      "name" : "MaXXX",
       "simbol" : "X"
     }, {
       "id" : 2,
-      "name" : "тест",
+      "name" : "ZerOne",
       "simbol" : "O"
     } ],
     "game" : {
@@ -19,7 +19,7 @@
         "num" : 1,
         "playerId" : 2,
         "x" : 1,
-        "y" : 1
+        "y" : 3
       }, {
         "num" : 2,
         "playerId" : 1,
@@ -40,7 +40,7 @@
     "gameResult" : {
       "player" : {
         "id" : 1,
-        "name" : "Maxxx",
+        "name" : "MaXXX",
         "simbol" : "X"
       }
     }
