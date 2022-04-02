@@ -1,9 +1,7 @@
 package com.egorkhaziev.ylab.core.logic;
 
-import com.egorkhaziev.ylab.core.logic.model.GamePlay;
 import com.egorkhaziev.ylab.core.logic.model.Player;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -12,7 +10,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 

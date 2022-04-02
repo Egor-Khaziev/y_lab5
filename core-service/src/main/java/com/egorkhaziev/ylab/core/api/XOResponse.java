@@ -1,4 +1,4 @@
-package com.egorkhaziev.ylab.core.utils;
+package com.egorkhaziev.ylab.core.api;
 
 import com.egorkhaziev.ylab.core.DTO.PlayerDTO;
 import lombok.AllArgsConstructor;
@@ -17,5 +17,7 @@ public class XOResponse {
     PlayerDTO player2;
 
     private char[][] gameMap;
+
+    PlayerDTO winner;
 
 }

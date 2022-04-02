@@ -1,4 +1,4 @@
-package com.egorkhaziev.ylab.core.utils;
+package com.egorkhaziev.ylab.core.api;
 
 import com.egorkhaziev.ylab.core.DTO.PlayerDTO;
 import lombok.AllArgsConstructor;

@@ -2,8 +2,8 @@ package com.egorkhaziev.ylab.core;
 
 
 import com.egorkhaziev.ylab.core.DTO.PlayerDTO;
-import com.egorkhaziev.ylab.core.utils.XORequest;
-import com.egorkhaziev.ylab.core.utils.XOResponse;
+import com.egorkhaziev.ylab.core.api.XORequest;
+import com.egorkhaziev.ylab.core.api.XOResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
