@@ -4,22 +4,27 @@ import com.egorkhaziev.ylab.core.api.XORequest;
 import com.egorkhaziev.ylab.core.api.XOResponse;
 import com.egorkhaziev.ylab.core.converters.ConverterPlayer;
 import com.egorkhaziev.ylab.core.exceptions.NoCreateGameException;
-import com.egorkhaziev.ylab.core.logic.Save.JSON.JSONout;
-import com.egorkhaziev.ylab.core.logic.Save.XML.XMLout;
-import com.egorkhaziev.ylab.core.logic.model.GamePlay;
-import com.egorkhaziev.ylab.core.logic.model.Player;
-import com.egorkhaziev.ylab.core.logic.model.Step;
+import com.egorkhaziev.ylab.core.services.JSON.JSONout;
+import com.egorkhaziev.ylab.core.services.XML.XMLout;
+import com.egorkhaziev.ylab.core.model.GamePlay;
+import com.egorkhaziev.ylab.core.model.Player;
+import com.egorkhaziev.ylab.core.model.Step;
 import com.egorkhaziev.ylab.core.exceptions.WrongInputException;
 import com.egorkhaziev.ylab.core.utils.Dot;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 @Service
 @Slf4j
 @Data
+//@RequiredArgsConstructor
 public class GamePlayService implements GamePlayRestResponseInterface {
 
     private GamePlay gamePlay;
@@ -27,18 +32,21 @@ public class GamePlayService implements GamePlayRestResponseInterface {
     private final PlayerService playerService;
     private final ConverterPlayer converterPlayer;
     private final Dot dot;
+    private final XMLout xmLout;
+    private final JSONout jsoNout;
 
     private int x = 0;
     private int y = 0;
 
     private boolean gameFinished;
 
-    public static int gameNumber;
-    public static int gameStep;
+    public int gameNumber;
+    public int gameStep;
 
     @PostConstruct
     private void init(){
         gameNumber=100;
+
     }
 
     public XOResponse responseNewGame(String player1, String player2) {
@@ -56,13 +64,14 @@ public class GamePlayService implements GamePlayRestResponseInterface {
         xoResponse.setGameMap(step(request.getX(), request.getY(), converterPlayer.dtoToPlayer(request.getPlayerDTO())));
         xoResponse.setPlayer1(converterPlayer.playerToDTO(playerService.getPlayer1()));
         xoResponse.setPlayer2(converterPlayer.playerToDTO(playerService.getPlayer2()));
-        if(gameFinished) {
+        if(gameFinished && gamePlay.getGameResult().getPlayer()!=null) {
             xoResponse.setWinner(converterPlayer.playerToDTO(gamePlay.getGameResult().getPlayer()));
         }
         return xoResponse;
     }
 
     private void startNewGame(String player1Name, String player2Name) {
+        gameNumber++;
         log.debug("game creating start");
         gameStep = 0;
         mapService.initMap();
@@ -189,8 +198,8 @@ public class GamePlayService implements GamePlayRestResponseInterface {
         playerService.savePlayersToFile();
         playerService.baseRefresh();
         playerService.savePlayersToBD();
-        new XMLout(gamePlay,gameNumber);
-        new JSONout(gamePlay,gameNumber);
+        xmLout.writeSaveGameFile(getGamePlay(), gameNumber);
+        jsoNout.writeSaveGameFile(getGamePlay(), gameNumber);
     }
 
 }

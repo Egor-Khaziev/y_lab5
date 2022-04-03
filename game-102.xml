@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Gameplay>
-    <Player id="1" name="Maxxx" symbol="X"/>
-    <Player id="2" name="тест" symbol="O"/>
+    <Player id="1" name="Axe" symbol="X"/>
+    <Player id="2" name="Rexona" symbol="O"/>
     <Game>
         <Step num="0" playerId="1">11</Step>
         <Step num="1" playerId="2">21</Step>
@@ -10,6 +10,6 @@
         <Step num="4" playerId="1">13</Step>
     </Game>
     <GameResult>
-        <Player id="1" name="Maxxx" symbol="X"/>
+        <Player id="1" name="Axe" symbol="X"/>
     </GameResult>
 </Gameplay>

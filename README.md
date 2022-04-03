@@ -2,9 +2,15 @@
 * GET запрос с 2мя параметрами player1 и player2
 создает новую игру с 2мя игроками.
 
-> http://localhost:8080/gameplay/new?player1=Maxxx&player2=тест
+> http://localhost:8080/gameplay/new?player1=Maxxx&player2=тест> 
+
+в ответ приходит JSON c полями:\
+player1 - PlayerDTO игрока1  \
+player2 - PlayerDTO игрока2 \
+gameMap - карта игрового поля \
+winner - победитель заполняется только при победе одного из участников
 ***
-* POST запрос на запись нового шага.
+* POST запрос нового шага.
 
 > http://localhost:8080/gameplay/step
 
@@ -19,12 +25,14 @@
 "id": 1
 }
 }
+
+ответ аналогичен запросу выше
 ***
 * POST запрос на воспроизведение сохраненной игры.
 
 > http://localhost:8080/gameplay/uploadJSON
 
-ниже приводится пример сохраненной игры из game-100.json (находится в core-service): 
+ниже приводится пример сохраненной игры из game-100.json (находится в корне): 
 
 {
 "gamePlay" : {

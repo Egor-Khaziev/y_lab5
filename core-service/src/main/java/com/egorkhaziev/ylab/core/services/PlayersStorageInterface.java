@@ -1,6 +1,8 @@
 package com.egorkhaziev.ylab.core.services;
 
-import com.egorkhaziev.ylab.core.logic.model.Player;
+import com.egorkhaziev.ylab.core.model.Player;
+
+import java.util.Map;
 
 public interface PlayersStorageInterface {
     void loadPlayers();
@@ -9,4 +11,5 @@ public interface PlayersStorageInterface {
     void saveLogToFile(Player winPlayer, Player lossPlayer);
     void savePlayersToBD();
     void savePlayersToFile();
+    Map<String, Player> getPlayerList();
 }

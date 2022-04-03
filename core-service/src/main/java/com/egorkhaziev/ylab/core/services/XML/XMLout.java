@@ -1,10 +1,16 @@
-package com.egorkhaziev.ylab.core.logic.Save.XML;
+package com.egorkhaziev.ylab.core.services.XML;
 
 
-import com.egorkhaziev.ylab.core.logic.Save.WriteSaveGame;
-import com.egorkhaziev.ylab.core.logic.model.GamePlay;
-import com.egorkhaziev.ylab.core.logic.model.Player;
-import com.egorkhaziev.ylab.core.logic.model.Step;
+import com.egorkhaziev.ylab.core.services.GamePlayService;
+import com.egorkhaziev.ylab.core.services.WriteSaveGame;
+import com.egorkhaziev.ylab.core.model.GamePlay;
+import com.egorkhaziev.ylab.core.model.Player;
+import com.egorkhaziev.ylab.core.model.Step;
+import com.egorkhaziev.ylab.core.utils.Dot;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -16,31 +22,18 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.FileOutputStream;
 
-
+@Service
+@RequiredArgsConstructor
 public class XMLout implements WriteSaveGame {
 
-    private final GamePlay gamePlay;
+    private final Dot dot;
 
     private Element gamePlayXML;
     private Document document;
     private Element game;
 
-    String fileName;
-
-    private final char X_DOT = 'X';
-    private final char O_DOT = 'O';
-
-    public XMLout(GamePlay gamePlay, int gameNumber) {
-        this.gamePlay = gamePlay;
-        this.fileName = "game-" + gameNumber + ".xml";
-
-        //Создание XML заготовки
-        init();
-        //сохранение заготовки
-        writeSaveGameFile(gamePlay, fileName);
-    }
-
-    private void init() {
+    //Создание XML заготовки
+    private void init(GamePlay gamePlay) {
 
         document = createDocument();
         gamePlayXML = document.createElement("Gameplay");
@@ -90,7 +83,7 @@ public class XMLout implements WriteSaveGame {
         Element playerXML = document.createElement("Player");
         playerXML.setAttribute("id", String.valueOf(player.getId()));
         playerXML.setAttribute("name", player.getName());
-        playerXML.setAttribute("symbol", String.valueOf(player.getId()==1?X_DOT:O_DOT));
+        playerXML.setAttribute("symbol", String.valueOf(player.getId()==1?dot.getX_DOT():dot.getO_DOT()));
         return playerXML;
     }
 
@@ -114,14 +107,16 @@ public class XMLout implements WriteSaveGame {
         return gameResult;
     }
 
+    //сохранение заготовки
     @Override
-    public void writeSaveGameFile(GamePlay gamePlay, String fileName) {
+    public void writeSaveGameFile(GamePlay gamePlay, Integer gameNumber) {
+        init(gamePlay);
 
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             transformer.setOutputProperty("indent", "yes");
             DOMSource source = new DOMSource(document);
-            FileOutputStream fos = new FileOutputStream(fileName);
+            FileOutputStream fos = new FileOutputStream("game-"+ gameNumber +".xml");
             StreamResult result = new StreamResult(fos);
             transformer.transform(source, result);
         } catch (Exception ex) {

@@ -1,7 +1,6 @@
 package com.egorkhaziev.ylab.core.services;
 
-import com.egorkhaziev.ylab.core.exceptions.UserNotFoundException;
-import com.egorkhaziev.ylab.core.logic.model.Player;
+import com.egorkhaziev.ylab.core.model.Player;
 import com.egorkhaziev.ylab.core.repositories.PlayerRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

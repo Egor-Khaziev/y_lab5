@@ -1,8 +1,9 @@
-package com.egorkhaziev.ylab.core.logic.Save.JSON;
+package com.egorkhaziev.ylab.core.services.JSON;
 
 
-import com.egorkhaziev.ylab.core.logic.Save.ReadSaveGame;
-import com.egorkhaziev.ylab.core.logic.model.GamePlay;
+import com.egorkhaziev.ylab.core.model.JSONTemplate;
+import com.egorkhaziev.ylab.core.services.ReadSaveGame;
+import com.egorkhaziev.ylab.core.model.GamePlay;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
@@ -18,7 +19,7 @@ public class JSONin implements ReadSaveGame {
 
         String jsonStr = fileToString(fileName);
         ObjectMapper mapper = new ObjectMapper();
-        Template jsonTemp = mapper.readValue(jsonStr, Template.class);
+        JSONTemplate jsonTemp = mapper.readValue(jsonStr, JSONTemplate.class);
         return jsonTemp.getGamePlay();
     }
 

@@ -1,4 +1,4 @@
-package com.egorkhaziev.ylab.core.logic.model;
+package com.egorkhaziev.ylab.core.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
 package com.egorkhaziev.ylab.core.controllers;
 
-import com.egorkhaziev.ylab.core.logic.Save.JSON.Template;
+import com.egorkhaziev.ylab.core.model.JSONTemplate;
 import com.egorkhaziev.ylab.core.services.SaveViewInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +15,7 @@ public class SaveController {
     private final SaveViewInterface saveGameView;
 
     @PostMapping("/uploadJSON")
-    public void uploadJSON(@RequestBody Template game) {
+    public void uploadJSON(@RequestBody JSONTemplate game) {
         saveGameView.playSaveGame(game.getGamePlay());
     }
 

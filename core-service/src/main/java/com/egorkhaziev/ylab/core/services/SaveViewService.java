@@ -1,8 +1,8 @@
 package com.egorkhaziev.ylab.core.services;
 
-import com.egorkhaziev.ylab.core.logic.model.GamePlay;
-import com.egorkhaziev.ylab.core.logic.model.Player;
-import com.egorkhaziev.ylab.core.logic.model.Step;
+import com.egorkhaziev.ylab.core.model.GamePlay;
+import com.egorkhaziev.ylab.core.model.Player;
+import com.egorkhaziev.ylab.core.model.Step;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +34,7 @@ public class SaveViewService implements SaveViewInterface {
 
             int x = gamePlay.getGame().getStep().get(i).getX();
             int y = gamePlay.getGame().getStep().get(i).getY();
-            mapJobService.getMap()[x - 1][y - 1] = ((i % 2 == 1) ? players.get(1).getSimbol() : players.get(2).getSimbol());
+            mapJobService.getMap()[x - 1][y - 1] = ((i % 2 == 1) ? players.get(1).getSimbol() : players.get(0).getSimbol());
             mapJobService.paintMap();
             System.out.println("step "+((i % 2 == 1) ? players.get(1).getName() : players.get(0).getName()));
             sleeping(1000);

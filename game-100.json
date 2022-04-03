@@ -1,0 +1,48 @@
+{
+  "gamePlay" : {
+    "player" : [ {
+      "id" : 1,
+      "name" : "Axe",
+      "simbol" : "X"
+    }, {
+      "id" : 2,
+      "name" : "Rexona",
+      "simbol" : "O"
+    } ],
+    "game" : {
+      "step" : [ {
+        "num" : 0,
+        "playerId" : 1,
+        "x" : 1,
+        "y" : 2
+      }, {
+        "num" : 1,
+        "playerId" : 2,
+        "x" : 2,
+        "y" : 1
+      }, {
+        "num" : 2,
+        "playerId" : 1,
+        "x" : 1,
+        "y" : 1
+      }, {
+        "num" : 3,
+        "playerId" : 2,
+        "x" : 2,
+        "y" : 2
+      }, {
+        "num" : 4,
+        "playerId" : 1,
+        "x" : 1,
+        "y" : 3
+      } ]
+    },
+    "gameResult" : {
+      "player" : {
+        "id" : 1,
+        "name" : "Axe",
+        "simbol" : "X"
+      }
+    }
+  }
+}

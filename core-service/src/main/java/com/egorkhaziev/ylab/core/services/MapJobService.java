@@ -1,6 +1,6 @@
 package com.egorkhaziev.ylab.core.services;
 
-import com.egorkhaziev.ylab.core.logic.GameMap;
+import com.egorkhaziev.ylab.core.model.GameMap;
 import com.egorkhaziev.ylab.core.utils.Dot;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

@@ -1,9 +1,9 @@
-package com.egorkhaziev.ylab.core.logic.Save.XML;
+package com.egorkhaziev.ylab.core.services.XML;
 
-import com.egorkhaziev.ylab.core.logic.Save.ReadSaveGame;
-import com.egorkhaziev.ylab.core.logic.model.GamePlay;
-import com.egorkhaziev.ylab.core.logic.model.Player;
-import com.egorkhaziev.ylab.core.logic.model.Step;
+import com.egorkhaziev.ylab.core.services.ReadSaveGame;
+import com.egorkhaziev.ylab.core.model.GamePlay;
+import com.egorkhaziev.ylab.core.model.Player;
+import com.egorkhaziev.ylab.core.model.Step;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
