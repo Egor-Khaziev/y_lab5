@@ -20,7 +20,7 @@ import javax.annotation.PostConstruct;
 @Service
 @Slf4j
 @Data
-public class GamePlayService implements GamePlayRestResponseInterface, GamePlayLogicInterface {
+public class GamePlayService implements GamePlayRestResponseInterface {
 
     private GamePlay gamePlay;
     private final MapJobInterface mapService;
@@ -62,7 +62,7 @@ public class GamePlayService implements GamePlayRestResponseInterface, GamePlayL
         return xoResponse;
     }
 
-    public void startNewGame(String player1Name, String player2Name) {
+    private void startNewGame(String player1Name, String player2Name) {
         log.debug("game creating start");
         gameStep = 0;
         mapService.initMap();
@@ -78,7 +78,7 @@ public class GamePlayService implements GamePlayRestResponseInterface, GamePlayL
         mapService.paintMap();
     }
 
-    public char[][] step (int x, int y, Player player){
+    private char[][] step (int x, int y, Player player){
 
         if(mapService.getMap()==null){
             throw new NoCreateGameException("Нет созданной игры.");
