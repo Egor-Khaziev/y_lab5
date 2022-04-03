@@ -32,16 +32,7 @@ public class PlayerService implements PlayersStorageInterface{
     //загрузка пользователей из файла
     public void loadPlayers() {
         playerList = new HashMap<>();
-//        //Проверка на наличие файла
-//        if(new File("players.txt").exists()) {
-//            try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("players.txt"))) {
-//                playerList = (HashMap) objectInputStream.readObject();
-//            } catch (ClassNotFoundException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
+
         List<Player> list =  playerRepository.findAll();
         for (Player p:list){
             playerList.put(p.getName(),p);
