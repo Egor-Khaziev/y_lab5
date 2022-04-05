@@ -1,7 +1,9 @@
 package com.egorkhaziev.ylab.core.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -16,11 +18,8 @@ public class GameResult {
     @JsonIgnore
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "player_id")
-    private Player player;
 
-    public GameResult() {
-    }
+    @Column(name = "winner")
+    private String winner;
 
 }

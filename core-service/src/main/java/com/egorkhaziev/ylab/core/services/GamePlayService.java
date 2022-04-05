@@ -4,7 +4,9 @@ import com.egorkhaziev.ylab.core.api.XORequest;
 import com.egorkhaziev.ylab.core.api.XOResponse;
 import com.egorkhaziev.ylab.core.converters.ConverterPlayer;
 import com.egorkhaziev.ylab.core.exceptions.NoCreateGameException;
-import com.egorkhaziev.ylab.core.repositories.GamePlayRepository;
+import com.egorkhaziev.ylab.core.repositories.PlayerRepository;
+import com.egorkhaziev.ylab.core.repositories.GameRepository;
+import com.egorkhaziev.ylab.core.repositories.ResultRepository;
 import com.egorkhaziev.ylab.core.services.JSON.JSONout;
 import com.egorkhaziev.ylab.core.services.XML.XMLout;
 import com.egorkhaziev.ylab.core.model.GamePlay;
@@ -13,14 +15,10 @@ import com.egorkhaziev.ylab.core.model.Step;
 import com.egorkhaziev.ylab.core.exceptions.WrongInputException;
 import com.egorkhaziev.ylab.core.utils.Dot;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 
 @Service
 @Slf4j
@@ -35,7 +33,9 @@ public class GamePlayService implements GamePlayRestResponseInterface {
     private final Dot dot;
     private final XMLout xmLout;
     private final JSONout jsoNout;
-    private final GamePlayRepository gamePlayRepository;
+    private final GameRepository gameRepository;
+    private final PlayerRepository playerRepository;
+    private final ResultRepository resultRepository;
 
     private int x = 0;
     private int y = 0;
@@ -66,8 +66,8 @@ public class GamePlayService implements GamePlayRestResponseInterface {
         xoResponse.setGameMap(step(request.getX(), request.getY(), converterPlayer.dtoToPlayer(request.getPlayerDTO())));
         xoResponse.setPlayer1(converterPlayer.playerToDTO(playerService.getPlayer1()));
         xoResponse.setPlayer2(converterPlayer.playerToDTO(playerService.getPlayer2()));
-        if(gameFinished && gamePlay.getGameResult().getPlayer()!=null) {
-            xoResponse.setWinner(converterPlayer.playerToDTO(gamePlay.getGameResult().getPlayer()));
+        if(gameFinished && gamePlay.getGameResult().getWinner()!=null) {
+            xoResponse.setWinner(converterPlayer.playerToDTO(playerService.getPlayerList().get(gamePlay.getGameResult().getWinner())));
         }
         return xoResponse;
     }
@@ -111,6 +111,7 @@ public class GamePlayService implements GamePlayRestResponseInterface {
             step.setX(x);
             step.setY(y);
             step.setNum(gameStep);
+            step.setGame(gamePlay.getGame());
 
             gamePlay.getGame().getStep().add(step);
             gameStep++;
@@ -144,7 +145,7 @@ public class GamePlayService implements GamePlayRestResponseInterface {
         if (isWin(player.getSimbol())) {
             System.out.println("GAME IS OVER");
 
-            gamePlay.getGameResult().setPlayer(player);
+            gamePlay.getGameResult().setWinner(player.getName());
 
             gameFinished =true;
             //сохранение отчета в файл
@@ -202,7 +203,15 @@ public class GamePlayService implements GamePlayRestResponseInterface {
         playerService.savePlayersToBD();
         xmLout.writeSaveGameFile(getGamePlay(), gameNumber);
         jsoNout.writeSaveGameFile(getGamePlay(), gameNumber);
-        gamePlayRepository.save(gamePlay);
+
+        gameRepository.save(gamePlay.getGame());
+        playerRepository.saveAll(gamePlay.getPlayer());
+        resultRepository.save(gamePlay.getGameResult());
     }
+
+
+
+
+
 
 }

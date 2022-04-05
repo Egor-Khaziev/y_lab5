@@ -2,6 +2,7 @@ package com.egorkhaziev.ylab.core.services.XML;
 
 
 import com.egorkhaziev.ylab.core.services.GamePlayService;
+import com.egorkhaziev.ylab.core.services.PlayerService;
 import com.egorkhaziev.ylab.core.services.WriteSaveGame;
 import com.egorkhaziev.ylab.core.model.GamePlay;
 import com.egorkhaziev.ylab.core.model.Player;
@@ -27,6 +28,7 @@ import java.io.FileOutputStream;
 public class XMLout implements WriteSaveGame {
 
     private final Dot dot;
+    private final PlayerService playerService;
 
     private Element gamePlayXML;
     private Document document;
@@ -56,11 +58,11 @@ public class XMLout implements WriteSaveGame {
         }
 
         //XML победитель
-        if(gamePlay.getGameResult().getPlayer()==null) {
+        if(gamePlay.getGameResult().getWinner()==null) {
             Element gameResult = createGameResult();
             gamePlayXML.appendChild(gameResult);
         } else {
-            Element winner = createPlayer(gamePlay.getGameResult().getPlayer());
+            Element winner = createPlayer(playerService.getPlayerList().get(gamePlay.getGameResult().getWinner()));
             Element gameResult = createGameResult(winner);
             gamePlayXML.appendChild(gameResult);
         }

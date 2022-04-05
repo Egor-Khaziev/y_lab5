@@ -22,6 +22,12 @@ public class Game {
             mappedBy = "game")
     private List<Step> step;
 
+
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "gameresult_id")
+    private GameResult gameResult;
+
     public Game() {
         this.step = new ArrayList<>();
     }

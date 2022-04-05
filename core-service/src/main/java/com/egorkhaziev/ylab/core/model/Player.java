@@ -42,20 +42,15 @@ public class Player implements Serializable {
     @Column(name = "simbol")
     private Character simbol;
 
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "gameplay_id")
-    private GamePlay gameplay;
-
-    @JsonIgnore
-    @CreationTimestamp
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @JsonIgnore
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+//    @JsonIgnore
+//    @CreationTimestamp
+//    @Column(name = "created_at")
+//    private LocalDateTime createdAt;
+//
+//    @JsonIgnore
+//    @UpdateTimestamp
+//    @Column(name = "updated_at")
+//    private LocalDateTime updatedAt;
 
     public Player(String name) {
         this.name = name;
@@ -63,6 +58,7 @@ public class Player implements Serializable {
         this.win = 0;
         this.seriesWin = 0;
     }
+
 
     @Override
     public String toString() {

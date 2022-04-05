@@ -22,8 +22,8 @@ public class SaveViewService implements SaveViewInterface {
         String winner = null;
         List<Player> players = gamePlay.getPlayer();
 
-        if (gamePlay.getGameResult().getPlayer()!=null) {
-            winner = gamePlay.getGameResult().getPlayer().getName();
+        if (gamePlay.getGameResult().getWinner()!=null) {
+            winner = gamePlay.getGameResult().getWinner();
         }
 
         System.out.println(players.get(0).getName() + " VS " + players.get(1).getName());

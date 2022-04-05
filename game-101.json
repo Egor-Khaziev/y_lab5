@@ -1,5 +1,6 @@
 {
   "gamePlay" : {
+    "id" : null,
     "player" : [ {
       "id" : 1,
       "name" : "Axe",
@@ -14,16 +15,16 @@
         "num" : 0,
         "playerId" : 1,
         "x" : 1,
-        "y" : 3
+        "y" : 1
       }, {
         "num" : 1,
-        "playerId" : 2,
-        "x" : 2,
+        "playerId" : 1,
+        "x" : 1,
         "y" : 2
       }, {
         "num" : 2,
-        "playerId" : 1,
-        "x" : 1,
+        "playerId" : 2,
+        "x" : 2,
         "y" : 2
       }, {
         "num" : 3,
@@ -32,17 +33,33 @@
         "y" : 1
       }, {
         "num" : 4,
-        "playerId" : 1,
+        "playerId" : 2,
         "x" : 1,
+        "y" : 3
+      }, {
+        "num" : 5,
+        "playerId" : 1,
+        "x" : 2,
+        "y" : 3
+      }, {
+        "num" : 6,
+        "playerId" : 1,
+        "x" : 3,
+        "y" : 3
+      }, {
+        "num" : 7,
+        "playerId" : 1,
+        "x" : 3,
+        "y" : 2
+      }, {
+        "num" : 8,
+        "playerId" : 2,
+        "x" : 3,
         "y" : 1
       } ]
     },
     "gameResult" : {
-      "player" : {
-        "id" : 1,
-        "name" : "Axe",
-        "simbol" : "X"
-      }
+      "winner" : "Rexona"
     }
   }
 }

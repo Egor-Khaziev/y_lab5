@@ -88,7 +88,7 @@ public class XMLin implements ReadSaveGame {
 
         gamePlay.setPlayer(players);
         gamePlay.getGame().setStep(steps);
-        gamePlay.getGameResult().setPlayer(winner);
+        gamePlay.getGameResult().setWinner(winner.getName());
 
         return gamePlay;
     }
