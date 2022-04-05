@@ -43,6 +43,11 @@ public class Player implements Serializable {
     private Character simbol;
 
     @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "gameplay_id")
+    private GamePlay gameplay;
+
+    @JsonIgnore
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;

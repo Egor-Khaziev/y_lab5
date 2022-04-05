@@ -4,6 +4,7 @@ import com.egorkhaziev.ylab.core.api.XORequest;
 import com.egorkhaziev.ylab.core.api.XOResponse;
 import com.egorkhaziev.ylab.core.converters.ConverterPlayer;
 import com.egorkhaziev.ylab.core.exceptions.NoCreateGameException;
+import com.egorkhaziev.ylab.core.repositories.GamePlayRepository;
 import com.egorkhaziev.ylab.core.services.JSON.JSONout;
 import com.egorkhaziev.ylab.core.services.XML.XMLout;
 import com.egorkhaziev.ylab.core.model.GamePlay;
@@ -34,6 +35,7 @@ public class GamePlayService implements GamePlayRestResponseInterface {
     private final Dot dot;
     private final XMLout xmLout;
     private final JSONout jsoNout;
+    private final GamePlayRepository gamePlayRepository;
 
     private int x = 0;
     private int y = 0;
@@ -200,6 +202,7 @@ public class GamePlayService implements GamePlayRestResponseInterface {
         playerService.savePlayersToBD();
         xmLout.writeSaveGameFile(getGamePlay(), gameNumber);
         jsoNout.writeSaveGameFile(getGamePlay(), gameNumber);
+        gamePlayRepository.save(gamePlay);
     }
 
 }
